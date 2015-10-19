@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <title>iota</title>
+    
+    <style>
+      .container {
+        background: transparent;
+        min-width: 200px;
+        max-width: 450px;
+        min-height: 200px;
+        margin: 20px auto;
+      }
+    </style>
+    
+  </head>
+  
+  <script>
+    function getServerErrors(){
+      $.getJSON( "/registerWeb", function( data ) {
+        if(data.result === "nothing"){
+          
+        }
+      });
+    }
+    
+    $(document).ready(function () {
+      $("#submitButton").click(function (e) {
+        e.preventDefault();
+        var matched, validEmail,
+            email = $("#email").val(),
+            confirm = $("#confirm").val();
+        
+        validEmail = (/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i.test(email));
+        matched = (email === confirm) ? true : false;
+        if(!validEmail) { 
+          $("#errors").html("Invalid Email"); 
+          return false;
+        } else if (!matched) {
+          $("#errors").html("Emails do not match"); 
+          return false;
+        } else { 
+          //forgot password not implmeneted yet
+          //$("#registerForm").submit();
+          $("#errors").html("Forgot password not implmented"); 
+          return false;
+        }
+      });
+      
+      $('#title').click(function () {
+        window.location = '/';
+      });
+    });
+    
+  </script>
+  <body onload="getServerErrors()">
+    <div class="container">
+      <div class="action-card">
+        <div id="title" class="title">iota</div><br>
+        <form action="sendCode" id="registerForm" method="post">
+          <input type="text" name="email" id="email" placeholder="EMAIL">
+          <input type="text" name="confirm" id="confirm" placeholder="CONFIRM">
+          <input type="submit" class="login action-submit" id="submitButton" value="send code">
+        </form>
+
+        <div id="errors" class="errors"></div>
+      </div>
+    </div>
+  </body>
+</html>

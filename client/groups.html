@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <title>iota - Add Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/client/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="genericons.css">
+    
+  </head>
+  
+  <style>
+      .contents {
+        max-width: 700px;
+        background-color: #fff;
+        height: 500px;
+        color: #cb6f83;
+      }
+      
+      @media all and (min-width: 1000px) {
+        .contents {
+          border: solid transparent;
+          border-width: 0 150px 0;
+          border-color: #dbdddf;
+          margin: 0px auto;
+          min-height: 100%;
+          /*
+          -webkit-border-image:url(border.png) 0 150 0 150 repeat; 
+          -o-border-image:url(border.png) 0 150 0 150 repeat;
+          border-image:url(border.png) 0 150 0 150 repeat;
+          */
+        }
+      }
+      
+      @media all and (max-width: 999px) {
+        .contents {
+          width: 100%;
+          min-width: 200px;
+          max-width: 900px;
+          margin-bottom:0px;
+        }
+      }
+      
+      button {
+          background-color: #cb6f83;
+          color: #fff;
+          border-radius: 5px;
+          border-style: none;
+          padding: 5px;
+          cursor: pointer;
+          display: block;
+          margin: 10px auto;
+          font-size: 16px;
+          font-weight: bold;
+      }
+      
+      .text-input {
+          border-radius: 5px;
+          border-style: solid;
+          border-color: #ccc;
+          border-width: 2px;
+          height: 20px;
+          padding: 5px;
+      }
+      
+      .sidebar {
+          height: 32px;
+      }
+      
+      .add-group-title {
+          font-size: 40px;
+          text-align: center;
+          padding-top: 20px;
+          margin-bottom: 40px;
+      }
+      
+      .add-group-actions {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+      }
+      
+      @media all and (max-width: 999px) {
+          .add-group-actions {
+              flex-direction: column;
+          }
+      }
+      
+      .create-group {
+          font-size: 30px;
+          text-align: center;
+      }
+      
+      .join-group {
+          font-size: 30px;
+          text-align: center;
+      }
+      
+      .middle {
+          text-align: center;
+          font-size: 36px;
+      }
+  </style>
+  
+  <body onload="">
+        <div class="container">
+          <div class="menu">
+            <a href="/" class="menu-title">iota</a>
+            <span class="menu-options">
+              <a href="about" class="menu-option">about</a> | 
+              <a href="settings" class="menu-option">settings</a> | 
+              <a href="logout" class="menu-option">logout</a>
+            </span>
+          </div>
+          
+          
+    
+        <div id="main" class="main">
+        
+            <div id="sidebar" class="sidebar">
+
+            </div>
+        
+            <div class="contents">
+                <div class="add-group-title">Add Group</div>
+                
+                <div class="add-group-actions">
+                    <div class="create-group">
+                        Create Group
+                        <br />
+                        <input type="text" class="text-input" id="newGroupName" placeholder="New group name">
+                        <br />
+                        <button onclick="createGroup()">Create</button>
+                    </div>
+                    
+                    <div class="middle">or</div>
+                    
+                    <div class="join-group">
+                        Join Group
+                        <br />
+                        <input type="text" class="text-input" id="groupID" placeholder="Group ID">
+                        <br />
+                        <input type="text" class="text-input" id="groupPW" placeholder="Group password">
+                        <br />
+                        <button onclick="joinGroup()">Join</button>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+      </div>
+  </body>
+  
+  <script>
+      function createGroup() {
+          var groupName = $("#groupName").val();
+          
+      }
+      
+      function joinGroup() {
+          var groupID = $("#groupID").val(); 
+          var groupPW = $("#groupPW").val(); 
+          
+      }
+  </script>
+</html>

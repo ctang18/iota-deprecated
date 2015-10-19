@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <title>iota</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/client/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="genericons.css">
+
+    <style>
+      @media all and (max-width: 999px) {
+        html {
+          background: #fff;
+        }
+      }
+      
+      @media all and (min-width: 1000px) {
+        body {
+          height: 100%;
+        }
+      }
+      
+      .contents {
+        max-width: 700px;
+      }
+      
+      @media all and (min-width: 1000px) {
+        .contents {
+          border: none transparent;
+          border-width: 0 3px 0;
+          border-right-width: 1px;
+          border-color: #f44f66;
+          margin: 0px auto;
+          min-height: 100%;
+          /*-webkit-border-image:url(border.png) 0 150 0 150 repeat; 
+          -o-border-image:url(border.png) 0 150 0 150 repeat;
+          border-image:url(border.png) 0 150 0 150 repeat;*/
+          background: #DDD;
+          padding-top: 1px;
+          padding-bottom: 1px;
+        }
+      }
+      
+      @media all and (max-width: 999px) {
+        .contents {
+          width: 100%;
+          min-width: 200px;
+          max-width: 900px;
+          margin-bottom:0px;
+        }
+      }
+      
+      .content {
+        display: -webkit-flex;
+        display: flex;
+        font-size: 15px;
+        color: #504045;
+        /*Padding Doesnt do anything*/
+        margin: 10px;
+        position: relative;
+        /*margin-top: 8px;*/
+        background-color: #FEFEFE;
+        border-radius: 3px;
+        /*box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);*/
+      }
+      
+      
+      @media all and (max-width: 999px) {
+        .content {
+          border-top-style: none;
+          border-right-style: none;
+          border-left-style: none;
+          border-bottom-style: solid;
+          border-color: #cb6f83;
+          border-left-color: #FFF;
+          border-width: 1px;
+          padding: 0px;
+        }
+      }
+        
+      .content-thumb {
+        color: #cb6f83;
+        width: 48px;
+        height: 48px;
+        margin: 10px;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      
+      .content-image {
+        width: 78px;
+        height: 77px;
+        visibility: hidden;
+        overflow: hidden;
+        z-index: 99;
+        position: absolute;
+        left: 15px;
+        cursor: pointer;
+      }
+      
+      @media all and (max-width: 999px) {
+        .content-image {
+          visibility: visible;
+          height: 78px;
+          left: 0px;
+        }
+      }
+      
+      .content:hover .content-image {
+        visibility: visible;
+      }
+      
+      .genericon {
+        z-index: 0;
+        position: absolute;
+        font-size: 35px;
+        background: rgba(0, 0, 0, 0);
+      }
+      
+      .content:hover content-thumb {
+        visibility: hidden;
+      }
+      
+      .content-main {
+        margin: 10px;
+        width: 100%;
+      }
+      
+      .content:hover .content-actions, .parent.hover .child { display:inline; }
+      
+      .content-link {
+        padding-top:1px;
+        /* color: #93a7da; */
+        color: #39cccc;
+      }
+      
+      .content-video {
+      	position: relative;
+      	display: none;
+      	padding-top: 30px; 
+      	padding-bottom: 56.25%;
+      	margin-top: 0px;
+      	margin-bottom: 0px;
+      }
+      
+      .content-video iframe {
+      	position: absolute;
+      	top: 0;
+      	left: 0;
+      	width: 100%;
+      	height: 100%;
+      }
+      
+      .content-trim {
+        display: -webkit-flex;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 20px;
+      }
+
+      .content-actions{
+        display:none;
+        align-items: flex-end;
+      }
+    
+      @media all and (max-width: 999px) {
+        .content-actions {
+          display: inline;
+        }
+      }
+      
+      .content-date {
+        color: #dddddd;
+        font-size: 13px;
+        padding-top: 0px;
+        overflow: hidden;
+        align-self: flex-end;
+      }
+      
+      .content-date:hover {
+        color: #F1706D;
+      }
+      
+      
+      .content-delete {
+        color: rgba(200, 20, 20, 0.7); /* #cc3333; */
+        background-color: rgba(0, 0, 0, 0);
+
+        padding: 1px 5px 1px;
+        cursor:pointer;
+        font-size: 14px;
+      }
+      
+      @media all and (max-width: 999px) {
+        .content-delete {
+          color: #b77;
+          border-style: none;
+          font-size: 16px;
+        }
+        
+      }
+      
+      .content-delete:hover {
+        border: 1px solid rgba(200, 20, 20, 0.7); /* #cc3333; */
+        border-radius: 4px;
+        color: #ffffff;
+        background-color: #cc3333;
+        text-shadow: 0 1px rgba(0,0,0,0.1);
+      }
+      
+      .content-share {
+        color: rgba(0, 116, 217, 0.7); /* #cc3333; */
+        background-color: rgba(0, 0, 0, 0);
+
+        padding: 1px 5px 1px;
+        cursor:pointer;
+        font-size: 14px;
+      }
+      
+      @media all and (max-width: 999px) {
+        .content-share {
+          color: #0074d9;
+          color: #5574a9;
+          border-style: none;
+          font-size: 16px;
+        }
+      }
+      
+      .content-share:hover {
+        border: 1px solid rgba(0, 116, 217, 0.7); /* #cc3333; */
+        border-radius: 4px;
+        color: #ffffff;
+        background-color: #0074d9;
+        text-shadow: 0 1px rgba(0,0,0,0.1);
+      }
+      
+      .image-expand-bg {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999999;
+        background: rgba(0, 0, 0, 0.75);
+        top: 0px;
+      }
+      
+      .image-expand {
+        width: auto;
+        height: auto;
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        display: block;
+        margin: auto;
+        top: 50px;
+        text-align: center;
+      }
+      
+      .search {
+        height: 20px;
+      }
+    
+    </style>
+
+  </head>
+  
+  <body onload="getContent(-1); getGroups()">
+    <div class="container">
+      <div class="menu">
+        <a href="/" class="menu-title">iota</a>
+        <span class="menu-options">
+          <a href="about" class="menu-option">about</a> | 
+          <a href="settings" class="menu-option">settings</a> | 
+          <a href="logout" class="menu-option">logout</a>
+        </span>
+      </div>
+    
+      <div id="main" class="main">
+        
+        <div id="sidebar" class="sidebar">
+          <div id="sidebar-flexbox" class="sidebar-flexbox">
+            <div id="sidebar-groups-button" class="sidebar-groups-button">
+              <div id="groups-button-title">groups</div>
+              <span id="groups-button-icon" class="genericon genericon-expand"></span>
+            </div>
+            <div id="sidebar-head" class="sidebar-head" onclick="loadUser()"></div>
+            <span class="search-bar">
+              <input type="search" class="search" id="search" placeholder="Search" 
+                autocomplete="off">
+            </span>
+          </div>
+        </div>
+        
+        <div id="contents" class="contents"></div>
+      </div>
+    </div>
+  </body>
+      
+      <script>
+
+        function getCookie(a, b) {
+          b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+          return b ? b.pop() : '';
+        }
+  
+        // document.getElementById('sidebar-title').innerHTML = $(window).width();
+        // $("#sidebar-head").text(getCookie('email'));
+        $("#sidebar-head").text("areyouitalian?@gmail.com");
+        
+        
+        $('#search').on('input propertychange paste', function() {
+            query = this.value;
+            $(".content").each(function() {
+            if($(this).text().match(new RegExp(query, 'i')))
+              $(this).show()
+            else
+              $(this).hide("fast");
+          });
+        });
+        
+        function getGroups() {
+          var node = document.createElement('div');
+          node.setAttribute("class", "groups-list");
+          
+          var parent = document.getElementById('sidebar-groups-button');
+          parent.appendChild(node);
+          $(parent).click(function() {
+            if($(node).css('display') == 'none')
+              $(node).show("fast", function() { //$(parent).css('display', 'flex'); 
+              });
+            else
+              $(node).hide();
+          })
+          
+          $.getJSON( "/ggrp", function( data ) {
+            var numGroups = data.groupname.length;
+            if (numGroups) {
+              
+                var allGroups = document.createElement('span');
+                allGroups.setAttribute("class", "sidebar-group");
+                allGroups.setAttribute("onclick", "loadGroup(0)");
+                allGroups.appendChild(document.createTextNode("All Groups"));
+                node.appendChild(allGroups);
+              
+              for (var i = 0; i < numGroups; i++) {
+                var group = data.groupname[i];
+                
+                var newNode = document.createElement('span');
+                newNode.setAttribute("class", "sidebar-group");
+                newNode.setAttribute("onclick", "loadGroup(" + data.groupid[i] + ")");
+                newNode.appendChild(document.createTextNode(group));
+                
+                node.appendChild(document.createElement('br'));
+                node.appendChild(newNode);
+              }
+              
+                var newNode = document.createElement('a');
+                newNode.setAttribute("class", "sidebar-group");
+                newNode.setAttribute("href", "/addgroup");
+                newNode.appendChild(document.createTextNode("+ Add Group"));
+                
+                node.appendChild(document.createElement('br'));
+                node.appendChild(newNode);
+            }
+          });
+          
+        }
+        
+        function loadGroup(gid){
+          $( ".contents" ).empty();
+          getContent(gid);
+        }
+        function loadUser(){
+          $( ".contents" ).empty();
+          getContent(-1);
+        }
+        
+        //WHY IS THIS HERE
+        // Variables used for video embedding -- DO NOT TOUCH.
+        var players = [];
+        var playerCount = 0;
+        
+        // -1: USER
+        // 0: GROUPS
+        // #: GROUP
+        function getContent(flag) {
+          $.getJSON( flag == -1 ? "/content" : "/ggc?gid=" + flag, function( data ) {
+            //document.getElementById("content").innerHTML = JSON.stringify(data);
+            
+            var node = document.getElementById('contents');
+            
+            for (var i = data.content.length - 1; i >= 0; i--) { 
+              
+              //BLANK DATA NEEDS TO BE PURGED -- TEMP FIX
+              if(data.content[i] !== ""){
+                var content = data.content[i];
+                
+                // Create node
+                var newNode = document.createElement('div');
+                newNode.setAttribute("class", "content");
+                
+                // Add thumbnail
+                var contentThumb = document.createElement('div');
+                contentThumb.setAttribute('class', 'content-thumb');
+
+                
+                // Add main
+                var contentMain = document.createElement('div');
+                contentMain.setAttribute('class', 'content-main');
+
+                
+                var regexLinkIncomplete = new RegExp(/(?!(http[s]?:\/\/))^[^@\s]+((\.com[\S]*$)|(\.se[\S]*$)|(\.org[\S]*$)|(\.net[\S]*$)|(\.ly[\S]*$))/igm);
+                if(regexLinkIncomplete.test(content)){
+                  content = "http://" + content;
+                }
+                
+                var regexLink = new RegExp(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+                if(regexLink.test(content)) {
+                  
+                  var regexPic = new RegExp(/((\.jpg$)|(\.png$)|(\.gif$))/i);
+                  var regexYoutube = new RegExp(/((youtube\.com\/watch\?v=)|(youtu\.be\/))(.{11})/i);
+                  var youtubeMatch = regexYoutube.exec(content);
+                  var regexVimeo = new RegExp(/vimeo.com\/(.{8})/i);
+                  var vimeoMatch = regexVimeo.exec(content);
+                  
+                  var contentLink = document.createElement('div');
+                  contentLink.setAttribute("class", "content-link");
+                  
+                  var newLink = document.createElement('a');
+                  newLink.setAttribute("href", content);
+                  newLink.setAttribute("target", "_blank");
+                  newLink.appendChild(document.createTextNode(content));
+                
+                  if(regexPic.test(content)){
+                    // Picture content
+                    var iamgeThumb = document.createElement('span');
+                    iamgeThumb.setAttribute('class', 'genericon genericon-image');
+                    contentThumb.appendChild(iamgeThumb);
+                    
+                    var contentImage = document.createElement("div");
+                    contentImage.setAttribute("class", "content-image");
+                    
+                    var newImage = document.createElement("img");
+                    newImage.setAttribute("alt", content);
+                    newImage.setAttribute("src", content);
+                    
+                    
+                    contentImage.appendChild(newImage);
+                    contentLink.appendChild(newLink);
+                    
+                    newNode.appendChild(contentImage);
+                    contentMain.appendChild(contentLink);
+                  } else if(youtubeMatch !== null || vimeoMatch !== null){
+                    // Video content
+                    var videoThumb = document.createElement('span');
+                    videoThumb.setAttribute('class', 'genericon genericon-youtube');
+                    contentThumb.appendChild(videoThumb);
+                    contentThumb.setAttribute('open', 'false');
+                    contentThumb.setAttribute('playerid', playerCount);
+                    
+                    var contentVideo = document.createElement('div');
+                    contentVideo.setAttribute("class", "content-video");
+                    
+                    // Store player src url for later
+                    if(youtubeMatch !== null)
+                      players[playerCount] = "//www.youtube.com/embed/"+youtubeMatch[4];
+                    else if (vimeoMatch !== null)
+                      players[playerCount] = "//player.vimeo.com/video/"+vimeoMatch[1]
+                    playerCount = playerCount + 1;
+                    
+                    // Create embedded video player on click
+                    $(contentThumb).click(function () {
+                      if(this.getAttribute('open') === 'false') {
+                        this.setAttribute('open', 'true');
+                        var newVideo = document.createElement('iframe');
+                        newVideo.setAttribute('src', players[this.getAttribute('playerid')]);
+                        newVideo.setAttribute('frameborder', '0');
+                        newVideo.setAttribute('allowfullscreen', '');
+                        $(this).parent().children('.content-main').children('.content-video').append(newVideo);
+                        $(this).parent().children('.content-main').children('.content-video').show("fast");
+                      } else {
+                        $(this).parent().children('.content-main').children('.content-video').children().remove();
+                        $(this).parent().children('.content-main').children('.content-video').hide("fast");
+                        this.setAttribute('open', 'false');
+                      }
+                    });
+                    
+                    contentLink.appendChild(newLink);
+                    contentMain.appendChild(contentVideo);
+                    contentMain.appendChild(contentLink);
+                  } else {
+                    // Link detected
+                    var linkThumb = document.createElement('span');
+                    linkThumb.setAttribute('class', 'genericon genericon-link');
+                    
+                    contentThumb.appendChild(linkThumb);
+                    contentLink.appendChild(newLink);
+                    contentMain.appendChild(contentLink);
+                  }
+                  
+                } else {
+                  // Just text, no link detected
+                  var textThumb = document.createElement('span');
+                  textThumb.setAttribute('class', 'genericon genericon-quote');
+                  contentThumb.appendChild(textThumb);
+                  
+                  contentMain.appendChild(document.createTextNode(decodeURIComponent(content)));
+                }
+                                newNode.appendChild(contentThumb);
+                newNode.appendChild(contentMain);
+
+                addContentTrim(contentMain, data.contentid[i], data.postdate[i], flag);
+
+                node.appendChild(newNode);
+              }
+            }
+            
+            // Crop preview images
+            $('.content-image img').each(function() {
+              this.onload = function() {
+                var original = new Image();
+                original.src = $(this).attr("src");
+                
+                var size = "78px";
+                var width = original.width;    // Current image width
+                var height = original.height;  // Current image height
+        
+                // Check if the current width is larger than the max
+                if(width > height){
+                  $(this).css("width", "auto"); // Set new width
+                  $(this).css("max-height", size);  // Scale height based on ratio
+                  $(this).css("height", "100%");  // Scale height based on ratio
+                } else {
+                  $(this).css("height", "auto"); // Set new width
+                  $(this).css("max-width", size);  // Scale height based on ratio
+                  $(this).css("width", "100%");  // Scale height based on ratio
+                }
+              };
+            });
+            
+            // Add image expansion on click
+            $('.content-image').click(function() {
+              var imgSrc = $(this).children('img').attr('src');
+              
+              $('<div>', { class: 'image-expand-bg' }).appendTo('body').click(function() {
+                $('.image-expand-bg').remove();
+              })
+              $('<img>', { class: 'image-expand', src: imgSrc }).appendTo('.image-expand-bg');
+            });
+            
+          });
+        }
+        
+        function readableDate(date){
+          var since = new Date() - new Date(date);
+          
+          var seconds = Math.floor(since / 1000)
+          if(seconds < 60)
+            return "posted " + seconds + " seconds ago";
+          if((minutes = Math.floor(seconds / 60)) < 60)
+            return "posted " + minutes + " minutes ago";
+          if((hours = Math.floor(minutes / 60)) < 24)
+            return "posted " + hours + " hours ago";
+          if((days = Math.floor(hours / 24)) < 30)
+            return "posted " + days + " days ago";
+          if((months = Math.floor(days / 30)) < 12)
+            return "posted " + months + " months ago";
+          years = Math.floor(months / 12);
+          return "posted " + years + " years ago";
+        }
+        
+        function addContentTrim(contentNode, contentId, contentDate, flag) {
+          
+          // Date
+          var dateElem = document.createElement('span');
+          dateElem.setAttribute("class", "content-date");
+          dateElem.appendChild(document.createTextNode(readableDate(contentDate)));
+          
+          // Delete button
+          if(flag === -1){
+            var deleteElem = document.createElement('span');
+            deleteElem.setAttribute('class', 'content-delete');
+            deleteElem.appendChild(document.createTextNode("delete"));
+            deleteElem.setAttribute('contentid', contentId);
+            deleteElem.setAttribute('onclick', 'confirmDelete(this)');
+          }
+          
+          // Share button
+          var shareElem = document.createElement('span');
+          shareElem.setAttribute('class', 'content-share');
+          shareElem.appendChild(document.createTextNode("share"));
+          shareElem.setAttribute('contentid', contentId);
+          shareElem.setAttribute('onclick', 'shareContent(this)');
+          
+          
+          var actionBar = document.createElement('div');
+          actionBar.setAttribute("class", "content-actions");
+          actionBar.appendChild(shareElem);
+          // Or if user is mod of group
+          if(flag == -1){
+            actionBar.appendChild(deleteElem);
+          }
+
+          
+          var contentTrim = document.createElement('div');
+          contentTrim.setAttribute('class', 'content-trim');
+          
+          contentTrim.appendChild(dateElem);
+          contentTrim.appendChild(actionBar);
+          contentNode.appendChild(contentTrim);
+        }
+        
+        function confirmDelete(content) {
+          content.innerHTML = "confirm";
+          content.setAttribute('onclick', 'deleteContent(this)');
+        }
+        
+        function deleteContent(content) {
+          var contentid = content.getAttribute('contentid');
+          $.post( "/remove", { 'contentid': contentid });
+          $(content).closest('.content').animate( { height : '0px' }, function() {
+            this.remove();
+          } );
+        }
+        
+    </script>
+        
+</html>

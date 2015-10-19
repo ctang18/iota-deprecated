@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="/client/js/jquery.min.js"></script>
+    
+    <title>iota.ly - settings</title>
+    
+    <style>
+    
+      html {
+        background: #fff;
+      }
+      
+      .main {
+        background: rgba(0, 0, 0, 0);
+        border: none;
+        min-width: 200px;
+        /* max-width: 900px; */
+        height: 100%;
+        margin: 0 auto;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;
+        margin-top:0px
+      }
+      
+      @media all and (max-width: 999px) {
+        .main {
+          padding: 0px 5px;
+        }
+      }
+
+
+    </style>
+  
+  </head>
+  <body>
+    <div class="container">
+      <div class="menu">
+        <a href="/" class="menu-title">iota</a>
+        <span class="menu-options">
+          <a href="about" class="menu-option">About</a> | 
+          <a href="settings" class="menu-option">Settings</a> | 
+          <a href="logout" class="menu-option">Logout</a>
+        </span>
+      </div>
+    
+      <div id="main" class="main">
+        
+        <div id="sidebar" class="sidebar">
+          <div id="sidebar-head" class="sidebar-head"></div>
+
+          <div id="sidebar-groups" class="sidebar-groups">
+            <!--<div id="sidebar-group" class="sidebar-group"></div>
+            <div id="group-actions" class="group-actions">New Group | Find Group</div> -->
+          </div>
+        </div>
+        
+        <div id="contents" class="contents"></div>
+    </div>
+  </body>
+  
+  <script>
+
+    function getCookie(a, b) {
+      b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+      return b ? b.pop() : '';
+    }
+  
+    $("#sidebar-head").text(getCookie('email'));
+  
+  </script>
+</html>
